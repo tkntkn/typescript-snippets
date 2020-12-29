@@ -1,4 +1,4 @@
-import { UniqueQueue } from 'UniqueQueue'
+import { UniqueQueue } from './UniqueQueue'
 
 class Timer {
     constructor() {
