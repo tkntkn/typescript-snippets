@@ -12,6 +12,7 @@ export async function sideKick<T>(procedure: (this: Worker) => T, option?: Worke
             this.postMessage(result);
         });
     }
+
     const inWorkerString = substringBetween(inWorker.toString(), '{', '}');
     const inWorkerUrl = URL.createObjectURL(new Blob([inWorkerString]));
     const worker = new Worker(inWorkerUrl, option);
@@ -31,9 +32,10 @@ export async function sideKick<T>(procedure: (this: Worker) => T, option?: Worke
 }
 
 (async function testSideKick() {
-    const result = await sideKick(() => {
-        function workHard(second: number) {
+    const result = await sideKick(function () {
+        const workHard = (second: number) => {
             const begin = +new Date();
+            console.log(this);
             let count = 0;
             while (true) {
                 count += 1;
@@ -44,7 +46,7 @@ export async function sideKick<T>(procedure: (this: Worker) => T, option?: Worke
             }
             return count;
         }
-        return workHard(3);
+        return workHard(10);
     });
     console.log(result);
 })();
