@@ -15,3 +15,11 @@ export async function resolveOnScrollEnd(target: HTMLElement, interval: number) 
     onScroll();
   });
 }
+
+
+// RxJS
+export async function resolveOnScrollEnd(target: HTMLElement, interval: number) {
+  await merge(timer(0), fromEvent(target, 'scroll'))
+    .pipe(debounceTime(interval), first())
+    .toPromise()
+}
