@@ -16,6 +16,7 @@ export function rxIntersectionObserver(option: IntersectionObserverInit): RxInte
     }
   }, option);
 
+  // TODO
   const subscription = new Subscription();
 
   function observe(target: Element) {
