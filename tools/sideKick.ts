@@ -6,9 +6,9 @@ function substringBetween(str: string, begin: string, end: string) {
 
 export async function sideKick<T>(procedure: (this: Worker) => T, option?: WorkerOptions) {
     function inWorker(this: Worker) {
-        this.addEventListener('message', (event) => {
+        this.addEventListener('message', async (event) => {
             const procedure = event.data;
-            const result = Function(`return ${procedure}`)()(this);
+            const result = await Function(`return ${procedure}`)()(this);
             this.postMessage(result);
         });
     }
